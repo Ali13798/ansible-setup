@@ -3,6 +3,11 @@
   become: yes
 
   tasks:
+    - name: Update packages
+      apt:
+        update_cache: yes
+        upgrade: yes
+
     - name: Disable SSH password auth and root login
       lineinfile:
         dest: /etc/ssh/sshd_config
