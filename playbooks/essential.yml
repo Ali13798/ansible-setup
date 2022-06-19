@@ -1,0 +1,25 @@
+---
+- hosts: home
+  become: yes
+
+  tasks:
+    - name: Disable SSH password auth and root login
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        state: present
+        validate: "sshd -t -f %s"
+      with_items:
+        - regexp: "^PasswordAuthentication"
+          line: "PasswordAuthentication no"
+        - regexp: "^PermitRootLogin"
+          line: "PermitRootLogin no"
+      register: sshd_config
+
+    - name: Restart SSH daemon
+      service:
+        name: sshd
+        state: restarted
+      when: sshd_config.changed
+
