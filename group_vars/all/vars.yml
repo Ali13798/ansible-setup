@@ -1,1 +1,6 @@
 username: ali
+extra_packages:
+  - nano
+inventory_hostname: homeserver
+locale: en_US.UTF-8
+ssh_public_key: "{{ lookup('file', '~/.ssh/homeserver.pub') }}"

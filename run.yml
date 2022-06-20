@@ -1,3 +1,7 @@
 ---
-- name: Essential playbook
-  ansible.builtin.import_playbook: playbooks/essential.yml
+- hosts: home
+  become: yes
+  roles:
+    - role: system
+      tags:
+        - system
